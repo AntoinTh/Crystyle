@@ -1,5 +1,5 @@
-
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -30,7 +30,6 @@ overflow: hidden;
 padding: 16px;
 }
 
-/* FULL-SCREEN CONFETTI CANVAS */
 #confettiCanvas {
 position: fixed;
 inset: 0;
@@ -133,56 +132,24 @@ to { transform: scale(1); opacity: 1; }
 <canvas id="confettiCanvas"></canvas>
 
 <main class="card">
-<!-- ANIMAL WITH HEART -->
-<svg class="art" viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg">
-<defs>
-<linearGradient id="fur" x1="0" x2="1">
-<stop offset="0" stop-color="#f7c7a1"/>
-<stop offset="1" stop-color="#f2a97b"/>
-</linearGradient>
-<linearGradient id="heart" x1="0" x2="1">
-<stop offset="0" stop-color="#ff4d7d"/>
-<stop offset="1" stop-color="#ff1f68"/>
-</linearGradient>
-</defs>
 
-<path d="M250 50 C250 33 270 25 282 38
-C294 25 314 33 314 50
-C314 78 282 92 282 106
-C282 92 250 78 250 50Z"
-fill="url(#heart)"/>
+<img
+class="art"
+src="https://i.imgur.com/8QfQZ6x.png"
+alt="Cute heart illustration"
+/>
 
-<path d="M90 120 C90 70 140 40 190 60
-C240 40 290 70 290 120
-C290 180 240 210 190 210
-C140 210 90 180 90 120Z"
-fill="url(#fur)"/>
-
-<path d="M110 92 L95 55 L140 78 Z" fill="#f2a97b"/>
-<path d="M270 92 L285 55 L240 78 Z" fill="#f2a97b"/>
-
-<circle cx="160" cy="130" r="8"/>
-<circle cx="220" cy="130" r="8"/>
-
-<path d="M190 144 C186 144 182 148 182 152
-C182 160 190 164 190 170
-C190 164 198 160 198 152
-C198 148 194 144 190 144Z"
-fill="#ff7aa2"/>
-</svg>
-
-<h1>nirali will you be my valentine?</h1>
+<h1>Crystyle, will you be my Valentine? 💖</h1>
 
 <section class="button-zone" id="zone">
 <button id="yesBtn">Yes</button>
 <button id="noBtn">No</button>
 </section>
 
-<!-- HINT -->
 <div class="hint" id="hint">“No” seems a bit shy 😈</div>
 
 <section class="result" id="result">
-<h2>YAY! 🎉</h2>
+<h2>You just made my day 💕</h2>
 <img
 class="fireworks"
 src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif"
@@ -198,7 +165,6 @@ const noBtn = document.getElementById("noBtn");
 const result = document.getElementById("result");
 const hint = document.getElementById("hint");
 
-/* ---------- CONFETTI ---------- */
 const confettiCanvas = document.getElementById("confettiCanvas");
 
 function resizeConfettiCanvas() {
@@ -220,7 +186,6 @@ useWorker: true
 
 function fullScreenConfetti() {
 const end = Date.now() + 1600;
-
 (function frame() {
 confettiInstance({
 particleCount: 12,
@@ -231,7 +196,6 @@ origin: { x: Math.random(), y: Math.random() * 0.3 }
 });
 if (Date.now() < end) requestAnimationFrame(frame);
 })();
-
 setTimeout(() => {
 confettiInstance({
 particleCount: 300,
@@ -243,14 +207,12 @@ origin: { x: 0.5, y: 0.55 }
 }, 300);
 }
 
-/* ---------- YES BUTTON GROWS ---------- */
 let yesScale = 1;
 function growYes() {
 yesScale = Math.min(2.2, yesScale + 0.1);
 yesBtn.style.transform = `translateY(-50%) scale(${yesScale})`;
 }
 
-/* ---------- NO BUTTON RUNS AWAY ---------- */
 function clamp(n, min, max) {
 return Math.max(min, Math.min(max, n));
 }
@@ -258,23 +220,18 @@ return Math.max(min, Math.min(max, n));
 function moveNo(px, py) {
 const z = zone.getBoundingClientRect();
 const b = noBtn.getBoundingClientRect();
-
 let dx = (b.left + b.width / 2) - px;
 let dy = (b.top + b.height / 2) - py;
 let mag = Math.hypot(dx, dy) || 1;
 dx /= mag;
 dy /= mag;
-
 let newLeft = (b.left - z.left) + dx * 150;
 let newTop = (b.top - z.top) + dy * 150;
-
 newLeft = clamp(newLeft, 0, z.width - b.width);
 newTop = clamp(newTop, 0, z.height - b.height);
-
 noBtn.style.left = newLeft + "px";
 noBtn.style.top = newTop + "px";
 noBtn.style.transform = "none";
-
 growYes();
 }
 
@@ -289,10 +246,9 @@ if (d < 140) moveNo(e.clientX, e.clientY);
 
 noBtn.addEventListener("click", e => e.preventDefault());
 
-/* ---------- YES CLICK ---------- */
 yesBtn.addEventListener("click", () => {
 zone.style.display = "none";
-hint.style.display = "none"; // HIDE THE HINT
+hint.style.display = "none";
 result.style.display = "block";
 resizeConfettiCanvas();
 fullScreenConfetti();
